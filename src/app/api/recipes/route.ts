@@ -3,7 +3,8 @@ import { getRecipes } from "@/lib/recipes";
 
 export async function GET() {
   try {
-    await getRecipes();
+    const recipes = await getRecipes();
+    return NextResponse.json(recipes);
   } catch (e) {
     console.error(e);
     return NextResponse.error();

@@ -1,6 +1,6 @@
-import { db, getDatabase } from "@/lib/db";
+import { db } from "@/lib/db";
+import { Recipe } from "@/interface/IRecipe";
 
-export async function getRecipes() {
-  const db = getDatabase();
+export const getRecipes = async () => {
   return await db.collection("recipes").find({}).toArray();
-}
+};
