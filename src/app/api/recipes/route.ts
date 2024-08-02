@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRecipes } from "@/lib/recipes";
+import { addRecipe, getRecipes } from "@/lib/recipes";
 
 export async function GET() {
   try {
@@ -9,4 +9,10 @@ export async function GET() {
     console.error(e);
     return NextResponse.error();
   }
+}
+
+export async function POST(req: Request) {
+  const newRecipe = await req.json();
+  const result = await addRecipe(newRecipe);
+  return NextResponse.json(result);
 }
