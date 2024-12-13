@@ -3,8 +3,8 @@ import { Document, ObjectId } from "mongodb";
 export interface IRecipe extends Document {
   _id: ObjectId;
   name: string;
-  ingredients: Record<string, Ingredient>;
-  category: string[];
+  ingredients: Ingredient[];
+  category?: string[];
   instructions?: string;
 }
 

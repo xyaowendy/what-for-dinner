@@ -6,7 +6,7 @@ interface RecipeItemProps {
 }
 
 const RecipeItem = ({ recipe }: RecipeItemProps) => {
-  return <></>;
+  return <>{recipe.name}</>;
 };
 
 export default RecipeItem;

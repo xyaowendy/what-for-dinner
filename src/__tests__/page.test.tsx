@@ -7,7 +7,7 @@ import { http } from "msw";
 describe("Page", () => {
   it("renders the home component with mocked data", async () => {
     render(<Page />);
-    expect(await screen.findByText(/burger/i)).toBeInTheDocument();
+    expect(await screen.findByText(/dinner/i)).toBeInTheDocument();
   });
 
   it("renders with overridden mock data", async () => {
