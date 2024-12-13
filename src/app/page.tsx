@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Recipe } from "@/interface/IRecipe";
+import { IRecipe } from "@/interface/IRecipe";
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -16,7 +16,7 @@ export default function Home() {
     }
   };
 
-  const getRandomRecipeName = (recipes: Recipe[]) => {
+  const getRandomRecipeName = (recipes: IRecipe[]) => {
     const totalCount = recipes?.length || 0;
     const random = Math.floor(Math.random() * totalCount);
     return recipes[random]?.name;
