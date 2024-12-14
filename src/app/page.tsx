@@ -2,19 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { IRecipe } from "@/interface/IRecipe";
+import { fetchRecipes } from "@/api/recipes";
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
-
-  const fetchRecipes = async () => {
-    try {
-      const response = await fetch("/api/recipes");
-      const data = await response.json();
-      setRecipes(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [error, setError] = useState(null);
 
   const getRandomRecipeName = (recipes: IRecipe[]) => {
     const totalCount = recipes?.length || 0;
@@ -23,8 +15,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchRecipes().then().catch();
+    fetchRecipes()
+      .then((data) => setRecipes(data))
+      .catch((error) => setError(error));
   }, []);
+
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

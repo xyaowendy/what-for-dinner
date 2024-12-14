@@ -1,27 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { IRecipe } from "@/interface/IRecipe";
-import RecipeItem from "@/app/recipes/components/RecipeItem";
+import { fetchRecipes } from "@/api/recipes";
+import RecipeList from "@/app/recipes/components/RecipeList";
 
-interface RecipesPageProps {
-  recipes: IRecipe[];
-}
+const RecipesPage = () => {
+  const [recipes, setRecipes] = useState<IRecipe[]>([]);
+  const [error, setError] = useState(null);
 
-const RecipesPage = ({ recipes }: RecipesPageProps) => {
-  if (recipes.length === 0) {
-    return (
-      <div className="center">
-        <h2>No recipes found</h2>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetchRecipes()
+      .then((data) => setRecipes(data))
+      .catch((error) => setError(error));
+  }, []);
 
-  return (
-    <ul>
-      {recipes.map((recipe) => {
-        return <RecipeItem key={recipe._id.toString()} recipe={recipe} />;
-      })}
-    </ul>
-  );
+  if (error) return <p>Error: {error}</p>;
+
+  return <RecipeList recipes={recipes} />;
 };
 
 export default RecipesPage;
