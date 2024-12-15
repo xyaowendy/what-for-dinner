@@ -7,16 +7,20 @@ import { fetchRecipes } from "@/api/recipes";
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<IRecipe>();
 
   const getRandomRecipeName = (recipes: IRecipe[]) => {
     const totalCount = recipes?.length || 0;
     const random = Math.floor(Math.random() * totalCount);
-    return recipes[random]?.name;
+    setSelectedRecipe(recipes[random]);
   };
 
   useEffect(() => {
     fetchRecipes()
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        setRecipes(data);
+        getRandomRecipeName(data);
+      })
       .catch((error) => setError(error));
   }, []);
 
@@ -30,12 +34,13 @@ export default function Home() {
         </p>
       </div>
 
-      <h2 className="mb-3 text-5xl font-semibold">
-        {getRandomRecipeName(recipes)}
-      </h2>
+      <h2 className="mb-3 text-5xl font-semibold">{selectedRecipe?.name}</h2>
 
       <div className="mb-32 text-center lg:mb-0 lg:w-full lg:max-w-5xl">
-        <button className="border-2 border-amber-400 text-3xl rounded-lg py-3 px-7 hover:bg-amber-50 hover:text-black hover:border-2 hover:border-black">
+        <button
+          className="border-2 border-amber-400 text-3xl rounded-lg py-3 px-7 hover:bg-amber-50 hover:text-black hover:border-2 hover:border-black"
+          onClick={() => getRandomRecipeName(recipes)}
+        >
           ROLL
         </button>
       </div>
